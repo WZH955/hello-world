@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>字符围绕鼠标动态改变</title>
+</head>
+<body>
+	<div id="content">
+		<header>
+			<h1>实际上最遥远的距离</h1>
+		</header>
+		<article>
+			<p>世界上最遥远的距离 不是生与死的距离 而是我站在你面前 你却不知道我爱你</p>
+			<p>世界上最遥远的距离 不是生与死的距离 而是我站在你面前 你却不知道我爱你</p>
+			<p>世界上最遥远的距离 不是生与死的距离 而是我站在你面前 你却不知道我爱你</p>
+			<p>世界上最遥远的距离 不是生与死的距离 而是我站在你面前 你却不知道我爱你</p>
+			<p>世界上最遥远的距离 不是生与死的距离 而是我站在你面前 你却不知道我爱你</p>
+		</article>
+	</div>
+	<script>
+	var cx = 0;
+	var cy = 0;
+	var val = 0;
+	function locate(){
+            cx = window.event.x;                    //横坐标
+            cy = window.event.y;                    //纵坐标
+	}
+	document.onmousemove = locate;
+	function follow(i){
+		var x;
+		if(i<4) x=cx-50+i*10;
+		else x = cx-25+i*10;
+		var y =cy-20+Math.floor(Math.random()*40);
+		w = eval("word"+i);
+		with(w.style) {
+			left = x.toString() + "px";
+			top = y.toString() + "px";
+		}
+	}
+	function show(i){
+		var w = eval("word" + i);
+		with(w.style) {
+			visibility = "visible";
+			s = parseInt(fontSize);
+			if(s>=200)
+				s-=100
+			else if(s>90&&s<=100){
+				s-=85;
+				clearInterval(val);
+				if(i<7)
+					val = setInterval("show("+(i+1)+")",20);
+			}
+			fontSize = s;
+		}
+	}
+	function start(){
+		for(i=1; i<=7; i++){
+			val = setInterval("show(1)",20);
+			setInterval("follow("+ i +")", 100);
+		}
+	}
+	</script>
+	<script>
+        var word = new Array(7);
+        word[1] = "w";
+        word[2] = "e";
+        word[3] = "l";
+        word[4] = "c";
+        word[5] = "o";
+        word[6] = "m";
+        word[7] = "e";
+       for(i=1;i<=7;i++)
+       	document.write("<div id='word" + i +"' style='width:20px;height:20px;position:absolute; font-size:1000; visibility:hidden'><font face = 'Forte' color='#cc0000'>" + word[i] + "</font></div>");
+       start();
+	</script>
+</body>
+</html>
